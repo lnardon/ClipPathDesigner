@@ -6,8 +6,9 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no"
     />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,700;1,400;1,500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;400;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles.css" />
@@ -19,12 +20,12 @@
   </head>
   <body>
     <div class="container">
-      <img src="" alt="logo" class="logo" />
+      <!-- <img src="" alt="logo" class="logo" /> -->
       <div class="content">
         <h1 class="title">Clip Path</h1>
         <h1 class="title">Designer</h1>
         <div class="deviceContainer">
-          <h3 class="deviceBtn">Web</h3>
+          <h3 class="deviceBtn btn-active">Web</h3>
           <h3 class="deviceBtn">Mobile</h3>
         </div>
         <div class="clipPathDiv">
@@ -35,7 +36,7 @@
         <div class="buttonsContainer">
           <button class="actionBtn" onclick="addNode()">Add node</button>
           <button class="actionBtn" onclick="deleteNode()">Delete node</button>
-          <button class="actionBtn">Copy CSS</button>
+          <button class="actionBtn" onclick="copyCSS()">Copy CSS</button>
         </div>
       </div>
     </div>
