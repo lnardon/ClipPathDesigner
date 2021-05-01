@@ -1,4 +1,5 @@
 let currentNode = { id: 1 };
+let currentPath = "polygon(50% 0%, 0% 100%, 100% 100%)";
 let nodeList = [];
 let drawAreaWidth = document
   .getElementsByClassName("clipPathDiv")[0]
@@ -22,7 +23,14 @@ function deleteNode() {
   }
 }
 
-function copyCSS() {}
+function copyCSS() {
+  const input = document.createElement("textarea");
+  input.innerHTML = `clip-path: ${currentPath}`;
+  document.body.appendChild(input);
+  input.select();
+  const result = document.execCommand("copy");
+  document.body.removeChild(input);
+}
 
 function webVersion() {}
 
