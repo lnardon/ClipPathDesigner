@@ -1,6 +1,7 @@
 let currentNode = { id: 1 };
 let currentPath = "polygon(50% 0%, 0% 100%, 100% 100%)";
 let nodeList = [];
+let drawArea = document.getElementsByClassName("clipPathDiv")[0];
 let drawAreaWidth = document
   .getElementsByClassName("clipPathDiv")[0]
   .getBoundingClientRect().width;
@@ -32,6 +33,10 @@ function copyCSS() {
   document.body.removeChild(input);
 }
 
-function webVersion() {}
+function webVersion() {
+  drawArea.style.width = "600px";
+}
 
-function mobileVersion() {}
+function mobileVersion() {
+  drawArea.style.width = "250px";
+}
