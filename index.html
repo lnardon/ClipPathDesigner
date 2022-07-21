@@ -29,12 +29,8 @@
           <h3 class="deviceBtn" onclick="mobileVersion()">Mobile</h3>
         </div>
         <div class="clipPathDiv">
-          <div class="box" ondragover="allowDrop(event)"></div>
-          <div class="handles">
-            <div class="handle" draggable="true" ondrag="drag(event)"></div>
-            <div class="handle" draggable="true" ondrag="drag(event)"></div>
-            <div class="handle" draggable="true" ondrag="drag(event)"></div>
-          </div>
+          <div class="box"></div>
+          <div class="handles" ondrop="dropHandle(event)"></div>
         </div>
         <div class="buttonsContainer">
           <button class="actionBtn" onclick="addNode()">Add node</button>
