@@ -16,6 +16,8 @@ function addNode() {
   div.setAttribute("class", `handle ${nodeList.length}`);
   document.getElementsByClassName("handles")[0].append(div);
   nodeList.push(div);
+  let t = drawArea.getBoundingClientRect();
+  generatePath({ clientX: 0, clientY: 0 }, t);
 }
 
 function deleteNode() {
@@ -27,15 +29,16 @@ function deleteNode() {
 
 function copyCSS() {
   const input = document.createElement("textarea");
-  input.innerHTML = `clip-path: ${currentPath}`;
+  input.innerHTML = `clip-path: polygon(${currentPath})`;
   document.body.appendChild(input);
   input.select();
   const result = document.execCommand("copy");
   document.body.removeChild(input);
+  alert("CSS Clip-path property copied successfully to your clipboard.");
 }
 
 function webVersion() {
-  drawArea.style.width = "600px";
+  drawArea.style.width = "100%";
   document
     .getElementsByClassName("deviceBtn")[1]
     .classList.remove("btn-active");
@@ -43,7 +46,7 @@ function webVersion() {
 }
 
 function mobileVersion() {
-  drawArea.style.width = "250px";
+  drawArea.style.width = "40%";
   document
     .getElementsByClassName("deviceBtn")[0]
     .classList.remove("btn-active");

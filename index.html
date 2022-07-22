@@ -20,13 +20,21 @@
   </head>
   <body>
     <div class="container">
-      <!-- <img src="" alt="logo" class="logo" /> -->
       <div class="content">
-        <h1 class="title">Clip Path</h1>
-        <h1 class="title">Designer</h1>
-        <div class="deviceContainer">
+        <div class="titleDiv">
+          <h1 class="title">Clip Path</h1>
+          <h1 class="title">Designer</h1>
+        </div>
+
+        <!-- <div class="deviceContainer">
           <h3 class="deviceBtn btn-active" onclick="webVersion()">Web</h3>
           <h3 class="deviceBtn" onclick="mobileVersion()">Mobile</h3>
+        </div> -->
+        <div class="buttonsContainer">
+          <button class="nodeBtn" onclick="addNode()" nodeid="0">
+            Add node
+          </button>
+          <button class="nodeBtn" onclick="deleteNode()">Delete node</button>
         </div>
         <div class="clipPathDiv">
           <div class="box"></div>
@@ -51,13 +59,7 @@
             ></div>
           </div>
         </div>
-        <div class="buttonsContainer">
-          <button class="actionBtn" onclick="addNode()" nodeid="0">
-            Add node
-          </button>
-          <button class="actionBtn" onclick="deleteNode()">Delete node</button>
-          <button class="actionBtn" onclick="copyCSS()">Copy CSS</button>
-        </div>
+        <button class="actionBtn" onclick="copyCSS()">Copy CSS</button>
       </div>
     </div>
 
