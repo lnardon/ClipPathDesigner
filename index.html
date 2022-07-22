@@ -30,10 +30,31 @@
         </div>
         <div class="clipPathDiv">
           <div class="box"></div>
-          <div class="handles" ondrop="dropHandle(event)"></div>
+          <div class="handles" ondrop="dropHandle(event)">
+            <div
+              draggable="true"
+              ondrag="drag(event)"
+              class="handle 0"
+              style="left: 50%; top: 0%"
+            ></div>
+            <div
+              draggable="true"
+              ondrag="drag(event)"
+              class="handle 1"
+              style="left: 0%; top: 100%"
+            ></div>
+            <div
+              draggable="true"
+              ondrag="drag(event)"
+              class="handle 2"
+              style="left: 100%; top: 100%"
+            ></div>
+          </div>
         </div>
         <div class="buttonsContainer">
-          <button class="actionBtn" onclick="addNode()">Add node</button>
+          <button class="actionBtn" onclick="addNode()" nodeid="0">
+            Add node
+          </button>
           <button class="actionBtn" onclick="deleteNode()">Delete node</button>
           <button class="actionBtn" onclick="copyCSS()">Copy CSS</button>
         </div>

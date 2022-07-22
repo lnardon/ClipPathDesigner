@@ -1,7 +1,7 @@
 const drawArea = document.getElementsByClassName("clipPathDiv")[0];
 let currentNode = { id: 0 };
 let currentPath = "50% 0%, 0% 100%, 100% 100%";
-let nodeList = [];
+let nodeList = [{ id: 0 }, { id: 1 }, { id: 2 }];
 
 document
   .getElementsByClassName("handles")[0]
@@ -13,7 +13,6 @@ function addNode() {
   let div = document.createElement("div");
   div.setAttribute("draggable", true);
   div.setAttribute("ondrag", "drag(event)");
-  div.setAttribute("drop", "dropHandle(event)");
   div.setAttribute("class", `handle ${nodeList.length}`);
   document.getElementsByClassName("handles")[0].append(div);
   nodeList.push(div);
@@ -52,24 +51,9 @@ function mobileVersion() {
 }
 
 function drag(e) {
+  currentNode = { id: e.target.classList[1] };
   let t = drawArea.getBoundingClientRect();
-  document.getElementsByClassName(
-    "box"
-  )[0].style.clipPath = `polygon(${Mapalizer(
-    e.clientX,
-    t.left,
-    t.left + t.width,
-    0,
-    100,
-    0
-  )}% ${Mapalizer(
-    e.clientY,
-    t.top,
-    t.top + t.height,
-    0,
-    100,
-    0
-  )}%, 0% 100%, 100% 100%)`;
+  generatePath(e, t);
 }
 
 function dropHandle(e) {
@@ -95,7 +79,23 @@ function dropHandle(e) {
     100,
     1
   )}%`;
-  console.log(e.clientY);
+}
+
+function generatePath(e, t) {
+  let nodes = currentPath.split(",");
+  nodes[e.target.classList[1]] = `${Mapalizer(
+    e.clientX,
+    t.left,
+    t.left + t.width,
+    0,
+    100,
+    1
+  )}% ${Mapalizer(e.clientY, t.top, t.top + t.height, 0, 100, 1)}%`;
+  let updatedPath = nodes.join(",");
+  document.getElementsByClassName(
+    "box"
+  )[0].style.clipPath = `polygon(${updatedPath})`;
+  currentPath = updatedPath;
 }
 
 // HELPER
