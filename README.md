@@ -1,9 +1,9 @@
-# Clip-Path Designer (Coming Soon...)
+# [Clip-Path Designer](https://lnardon.github.io/ClipPathDesigner/ "Homepage")
 
-A website to create clip-path designs and get the CSS code for it.
+A website to design custom CSS clip-paths.
 
 <p align="center" style="height: 600px">
-  <img src="./Home.png">
+  <img src="./demo.gif">
 </p>
 
 ## [Access website here](https://lnardon.github.io/ClipPathDesigner/ "Homepage")
@@ -11,7 +11,6 @@ A website to create clip-path designs and get the CSS code for it.
 ### What was used on this project
 
 - HTML
-- JavaScript
+- Javascript
 - CSS
-- Drap and Drop API
-- Figma
+- Mapalizer Module (https://github.com/lnardon/Mapalizer)
