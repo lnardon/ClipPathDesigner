@@ -1,14 +1,8 @@
 const drawArea = document.getElementsByClassName("clipPathDiv")[0];
-let t = drawArea.getBoundingClientRect();
+const t = drawArea.getBoundingClientRect();
 let currentNode = { id: 0 };
 let currentPath = "50% 0%, 0% 100%, 100% 100%";
 let nodeList = [{ id: 0 }, { id: 1 }, { id: 2 }];
-
-document
-  .getElementsByClassName("handles")[0]
-  .addEventListener("dragover", (evt) => {
-    dropHandle(evt);
-  });
 
 function addNode() {
   let uuid = Math.pow(Date.now() * Math.random(), Math.random());
@@ -16,17 +10,18 @@ function addNode() {
   div.setAttribute("draggable", true);
   div.setAttribute("ondrag", "drag(event)");
   div.setAttribute("class", `handle ${uuid}`);
-  document.getElementsByClassName("handles")[0].append(div);
+  div.setAttribute("style", "top:50%; left:50%");
   nodeList.push({ id: uuid });
-  let t = drawArea.getBoundingClientRect();
-  generatePath({ clientX: 0, clientY: 0 }, t);
+  currentNode = { id: uuid };
+  document.getElementsByClassName("handles")[0].append(div);
+  generatePath({ clientX: window.innerWidth, clientY: window.innerHeight });
 }
 
 function deleteNode(e) {
   if (nodeList.length > 3) {
     nodeList.splice(currentNode.id, 1);
     document.getElementsByClassName(`handle ${currentNode.id}`)[0].remove();
-    generatePath(e, t);
+    generatePath(e);
   } else {
     alert("At least 3 handles should be present");
   }
@@ -59,54 +54,89 @@ function mobileVersion() {
 }
 
 function drag(e) {
-  currentNode = { id: e.target.classList[1] };
-  generatePath(e, t);
+  currentNode = {
+    id: e.target.classList[1],
+  };
+  generatePath({
+    target: e.target,
+    x: e.clientX,
+    y: e.clientY,
+  });
 }
 
-function dropHandle(e) {
-  e.preventDefault();
-  let t = drawArea.getBoundingClientRect();
-  document.getElementsByClassName(
-    `handle ${currentNode.id}`
-  )[0].style.left = `${Mapalizer(
-    e.clientX,
-    t.left,
-    t.left + t.width,
-    0,
-    100,
-    1
-  )}%`;
-  document.getElementsByClassName(
-    `handle ${currentNode.id}`
-  )[0].style.top = `${Mapalizer(
-    e.clientY,
-    t.top,
-    t.top + t.height,
-    0,
-    100,
-    1
-  )}%`;
-}
-
-function generatePath(e, t) {
-  let nodes = currentPath.split(",");
-  for (const i in nodeList) {
-    if (nodeList[i].id == e.target.classList[1]) {
-      console.log(nodes[i], e.target.classList[1]);
-      nodes[i] = `${Mapalizer(
-        e.clientX,
-        t.left,
-        t.left + t.width,
-        0,
-        100,
-        1
-      )}% ${Mapalizer(e.clientY, t.top, t.top + t.height, 0, 100, 1)}%`;
-      let updatedPath = nodes.join(",");
-      document.getElementsByClassName(
-        "box"
-      )[0].style.clipPath = `polygon(${updatedPath})`;
-      currentPath = updatedPath;
+function getConvertedPosition(e, axis) {
+  if (axis === "X") {
+    if (e.x >= t.left && e.x < t.right) {
+      return e.x;
+    } else {
+      if (e.x <= t.left) {
+        return t.left;
+      }
+      if (e.x >= t.right) {
+        return t.right;
+      }
     }
+  } else {
+    if (e.y >= t.top && e.y < t.bottom) {
+      return e.y;
+    } else {
+      if (e.y < t.top) {
+        return t.top;
+      }
+      if (e.y > t.bottom) {
+        return t.bottom;
+      }
+    }
+  }
+}
+
+function generatePath(e) {
+  if (e.x !== 0 && e.y !== 0) {
+    let nodes = currentPath.split(",");
+    for (const i in nodeList) {
+      if (nodeList[i].id == e.target.classList[1]) {
+        nodes[i] = `${Mapalizer(
+          getConvertedPosition(e, "X"),
+          t.left,
+          t.right,
+          0,
+          100,
+          1
+        )}% ${Mapalizer(
+          getConvertedPosition(e, "Y"),
+          t.top,
+          t.bottom,
+          0,
+          100,
+          1
+        )}%`;
+        let updatedPath = nodes.join(",");
+        document.getElementsByClassName(
+          "box"
+        )[0].style.clipPath = `polygon(${updatedPath})`;
+        currentPath = updatedPath;
+      }
+    }
+    document.getElementsByClassName(
+      `handle ${currentNode.id}`
+    )[0].style.left = `${Mapalizer(
+      getConvertedPosition(e, "X"),
+      t.left,
+      t.right,
+      0,
+      100,
+      0
+    )}%`;
+    document.getElementsByClassName(
+      `handle ${currentNode.id}`
+    )[0].style.top = `${Mapalizer(
+      getConvertedPosition(e, "Y"),
+      t.top,
+      t.bottom,
+      0,
+      100,
+      0
+    )}%`;
   }
 }
 
