@@ -1,5 +1,5 @@
 const drawArea = document.getElementsByClassName("clipPathDiv")[0];
-const t = drawArea.getBoundingClientRect();
+const areaProps = drawArea.getBoundingClientRect();
 let currentNode = { id: 0 };
 let currentPath = "50% 0%, 0% 100%, 100% 100%";
 let nodeList = [{ id: 0 }, { id: 1 }, { id: 2 }];
@@ -12,16 +12,26 @@ function addNode() {
   div.setAttribute("class", `handle ${uuid}`);
   div.setAttribute("style", "top:50%; left:50%");
   nodeList.push({ id: uuid });
-  currentNode = { id: uuid };
   document.getElementsByClassName("handles")[0].append(div);
-  generatePath({ clientX: window.innerWidth, clientY: window.innerHeight });
+  setActiveNode(uuid, currentNode.id);
+  generatePath({
+    x: areaProps.left + areaProps.width / 2,
+    y: areaProps.top + areaProps.height / 2,
+    target: { classList: div.classList },
+  });
 }
 
-function deleteNode(e) {
+function deleteNode() {
   if (nodeList.length > 3) {
-    nodeList.splice(currentNode.id, 1);
-    document.getElementsByClassName(`handle ${currentNode.id}`)[0].remove();
-    generatePath(e);
+    const el = document.getElementsByClassName(`handle ${currentNode.id}`)[0];
+    el.remove();
+    for (let i = nodeList.length - 1; i >= 0; --i) {
+      if (nodeList[i].id == el.classList[1]) {
+        nodeList.splice(i, 1);
+      }
+    }
+    setActiveNode(nodeList[0].id, el.classList[1]);
+    generatePath({ x: 0, y: 0 });
   } else {
     alert("At least 3 handles should be present");
   }
@@ -54,9 +64,9 @@ function mobileVersion() {
 }
 
 function drag(e) {
-  currentNode = {
-    id: e.target.classList[1],
-  };
+  if (currentNode.id !== e.target.classList[1]) {
+    setActiveNode(e.target.classList[1], currentNode.id);
+  }
   generatePath({
     target: e.target,
     x: e.clientX,
@@ -66,25 +76,25 @@ function drag(e) {
 
 function getConvertedPosition(e, axis) {
   if (axis === "X") {
-    if (e.x >= t.left && e.x < t.right) {
+    if (e.x >= areaProps.left && e.x < areaProps.right) {
       return e.x;
     } else {
-      if (e.x <= t.left) {
-        return t.left;
+      if (e.x <= areaProps.left) {
+        return areaProps.left;
       }
-      if (e.x >= t.right) {
-        return t.right;
+      if (e.x >= areaProps.right) {
+        return areaProps.right;
       }
     }
   } else {
-    if (e.y >= t.top && e.y < t.bottom) {
+    if (e.y >= areaProps.top && e.y < areaProps.bottom) {
       return e.y;
     } else {
-      if (e.y < t.top) {
-        return t.top;
+      if (e.y < areaProps.top) {
+        return areaProps.top;
       }
-      if (e.y > t.bottom) {
-        return t.bottom;
+      if (e.y > areaProps.bottom) {
+        return areaProps.bottom;
       }
     }
   }
@@ -97,15 +107,15 @@ function generatePath(e) {
       if (nodeList[i].id == e.target.classList[1]) {
         nodes[i] = `${Mapalizer(
           getConvertedPosition(e, "X"),
-          t.left,
-          t.right,
+          areaProps.left,
+          areaProps.right,
           0,
           100,
           1
         )}% ${Mapalizer(
           getConvertedPosition(e, "Y"),
-          t.top,
-          t.bottom,
+          areaProps.top,
+          areaProps.bottom,
           0,
           100,
           1
@@ -121,8 +131,8 @@ function generatePath(e) {
       `handle ${currentNode.id}`
     )[0].style.left = `${Mapalizer(
       getConvertedPosition(e, "X"),
-      t.left,
-      t.right,
+      areaProps.left,
+      areaProps.right,
       0,
       100,
       0
@@ -131,13 +141,20 @@ function generatePath(e) {
       `handle ${currentNode.id}`
     )[0].style.top = `${Mapalizer(
       getConvertedPosition(e, "Y"),
-      t.top,
-      t.bottom,
+      areaProps.top,
+      areaProps.bottom,
       0,
       100,
       0
     )}%`;
   }
+}
+
+function setActiveNode(id, oldId) {
+  let oldEl = document.getElementsByClassName(oldId)[0];
+  if (oldEl) oldEl.classList.remove("active");
+  document.getElementsByClassName(id)[0].classList.add("active");
+  currentNode = { id: id };
 }
 
 // HELPER
