@@ -15,7 +15,7 @@
     <title>Clip Path Designer</title>
     <meta
       name="description"
-      content="Website to design custom clip-paths freely."
+      content="Free website to design custom CSS clip-paths created by github.com/lnardon."
     />
   </head>
   <body>
@@ -25,11 +25,10 @@
           <h1 class="title">Clip Path</h1>
           <h1 class="title">Designer</h1>
         </div>
-
-        <!-- <div class="deviceContainer">
-          <h3 class="deviceBtn btn-active" onclick="webVersion()">Web</h3>
-          <h3 class="deviceBtn" onclick="mobileVersion()">Mobile</h3>
-        </div> -->
+        <div class="deviceContainer">
+          <h3 class="deviceBtn btn-active" onclick="webVersion()">Landscape</h3>
+          <h3 class="deviceBtn" onclick="mobileVersion()">Portrait</h3>
+        </div>
         <div class="buttonsContainer">
           <button class="nodeBtn" onclick="addNode()" nodeid="0">
             Add node
@@ -38,7 +37,7 @@
         </div>
         <div class="clipPathDiv">
           <div class="box"></div>
-          <div class="handles" ondrop="dropHandle(event)">
+          <div class="handles">
             <div
               draggable="true"
               ondrag="drag(event)"
