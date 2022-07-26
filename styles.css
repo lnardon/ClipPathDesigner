@@ -66,7 +66,7 @@ html {
 }
 
 .btn-active {
-  color: #4fff75;
+  color: #fac400;
 }
 
 .clipPathDiv {
@@ -76,7 +76,8 @@ html {
   border: 3px dashed#fafafaa4;
   border-radius: 0.125rem;
   background-color: transparent;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
+  transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1);
 }
 
 .box {
@@ -84,7 +85,7 @@ html {
   width: 100%;
   height: 100%;
   clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-  background-color: #4fff75;
+  background-color: #fac400;
 }
 
 .handles {
@@ -120,8 +121,8 @@ html {
   outline: none;
   cursor: pointer;
   border-radius: 0.25rem;
-  background-color: #4fff75;
-  font-size: 1rem;
+  background-color: #fac400;
+  font-size: 1.125rem;
   font-weight: bold;
   margin-bottom: 2rem;
   width: 100%;
@@ -129,7 +130,6 @@ html {
 
 .nodeBtn {
   padding: 0.75rem 1.25rem;
-  border: none;
   outline: none;
   cursor: pointer;
   border-radius: 0.25rem;
@@ -137,14 +137,18 @@ html {
   font-size: 1rem;
   font-weight: bold;
   background-color: transparent;
-  border: 2px solid #4fff75;
-  width: 150px;
+  border: 3px solid #fafafa;
+  width: 100%;
   transition: all 0.5s ease;
 }
 
 .nodeBtn:hover {
-  background-color: #fafafa;
-  color: #171717;
+  border-color: #fac400;
+  color: #fac400;
+}
+
+.nodeBtn:nth-child(2) {
+  margin-left: 1rem;
 }
 
 @media (max-width: 499px) {
